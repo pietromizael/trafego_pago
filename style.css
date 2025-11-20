@@ -189,6 +189,7 @@ h1, h2, h3, h4 {
     position: relative;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    animation: float 6s ease-in-out infinite;
 }
 
 .card-header {
@@ -205,13 +206,27 @@ h1, h2, h3, h4 {
 
 .red { background-color: #ff5f56; }
 .yellow { background-color: #ffbd2e; }
-.green { background-color: #27c93f; }
+.green { background-color: #27c93f; box-shadow: 0 0 10px #27c93f; }
 
 .line {
     height: 12px;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 6px;
     margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 2s infinite;
 }
 
 .line-1 { width: 80%; }
@@ -232,15 +247,30 @@ h1, h2, h3, h4 {
     background: linear-gradient(to top, var(--accent-green-dim), var(--accent-green));
     border-radius: 8px 8px 0 0;
     opacity: 0.8;
+    box-shadow: 0 0 20px var(--accent-green-dim);
 }
 
-.bar-1 { height: 30%; animation: grow1 1.5s ease-out forwards; }
-.bar-2 { height: 50%; animation: grow2 1.5s ease-out 0.2s forwards; }
-.bar-3 { height: 80%; animation: grow3 1.5s ease-out 0.4s forwards; }
+.bar-1 { height: 30%; animation: grow1 1.5s ease-out forwards, breathe 3s ease-in-out infinite 1.5s; }
+.bar-2 { height: 50%; animation: grow2 1.5s ease-out 0.2s forwards, breathe 3s ease-in-out infinite 1.7s; }
+.bar-3 { height: 80%; animation: grow3 1.5s ease-out 0.4s forwards, breathe 3s ease-in-out infinite 1.9s; }
 
 @keyframes grow1 { from { height: 0; } to { height: 30%; } }
 @keyframes grow2 { from { height: 0; } to { height: 50%; } }
 @keyframes grow3 { from { height: 0; } to { height: 80%; } }
+
+@keyframes breathe {
+    0%, 100% { transform: scaleY(1); opacity: 0.8; }
+    50% { transform: scaleY(1.05); opacity: 1; box-shadow: 0 0 30px var(--accent-green-dim); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
+}
 
 .glow-effect {
     position: absolute;
@@ -253,6 +283,12 @@ h1, h2, h3, h4 {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
+    animation: pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.15; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.25; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 /* Responsive */
